@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="randle.css">
+    <link rel="icon" href="randle_icon.png">
+    <meta charset="UTF-8">
+    <title>Randle!</title>
+</head>
+
+<body>
+    <header>
+        <button onclick="show_how_to();" style="background-color: #000; border: none; color:white">?</button>
+        <a href="../main/index.html" class="title">RANDLE</a>
+        <button onclick="show_settings();" style="background-color: #000; border: none;"><img src="../settings.png"
+                style="width: 1.5em; height: 1.5em"></button>
+    </header>
+    <div class="board">
+        <div class="brd_row" index="1">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="2">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="3">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="4">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="5">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="6">
+            <span></span>
+            <div class="event"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+        <div class="brd_row" index="7">
+            <span>Normal: Nothing special, just a normal Wordle!</span>
+            <div class="event"><img src="normal.png"></div>
+            <div class="letter" index="1"></div>
+            <div class="letter" index="2"></div>
+            <div class="letter" index="3"></div>
+            <div class="letter" index="4"></div>
+            <div class="letter" index="5"></div>
+        </div>
+    </div>
+    <span id="error"></span>
+    <div id="keyboard">
+        <div class="kb_row">
+            <button class="kb_key">Q</button>
+            <button class="kb_key">W</button>
+            <button class="kb_key">E</button>
+            <button class="kb_key">R</button>
+            <button class="kb_key">T</button>
+            <button class="kb_key">Y</button>
+            <button class="kb_key">U</button>
+            <button class="kb_key">I</button>
+            <button class="kb_key">O</button>
+            <button class="kb_key">P</button>
+        </div>
+        <div class="kb_row">
+            <button class="kb_key">A</button>
+            <button class="kb_key">S</button>
+            <button class="kb_key">D</button>
+            <button class="kb_key">F</button>
+            <button class="kb_key">G</button>
+            <button class="kb_key">H</button>
+            <button class="kb_key">J</button>
+            <button class="kb_key">K</button>
+            <button class="kb_key">L</button>
+        </div>
+        <div class="kb_row">
+            <button class="kb_key" style="aspect-ratio: 2 / 1;">Enter</button>
+            <button class="kb_key">Z</button>
+            <button class="kb_key">X</button>
+            <button class="kb_key">C</button>
+            <button class="kb_key">V</button>
+            <button class="kb_key">B</button>
+            <button class="kb_key">N</button>
+            <button class="kb_key">M</button>
+            <button class="kb_key">⌫</button>
+        </div>
+    </div>
+
+    <div class="absolute go"> <!--Game over -->
+        <span class="title"></span>
+        <span class="go_answer"></span>
+        <div class="button_container">
+            <button onclick="new_game();">Play again</button>
+            <button onclick="window.location.href = '../main/index.html';">Other games</button>
+            <button onclick="close_all();">Close</button>
+        </div>
+    </div>
+
+    <div class="absolute settings"> <!--Settings-->
+        <span class="title">Settings</span>
+        <div class="button_container">
+            <button onclick="show_custom();">Custom randle</button>
+            <button onclick="close_all();">Back</button>
+        </div>
+    </div>
+
+    <div class="absolute custom"> <!--Custom word-->
+        <span class="title">Create custom randle!</span>
+        <span class="cw_subtitle">The word must be 5 symbols long</span>
+        <input id="link_input" type="text" name="answer" placeholder="Word">
+        <a id="link"></a>
+        <div class="button_container">
+            <button onclick="get_link();">Generate link</button>
+            <button onclick="close_all();">Cancel</button>
+        </div>
+    </div>
+
+    <div class="absolute how_to">
+        <span class="title">How to play?</span>
+        <p>Enter a word</p>
+        <div class="board">
+            <div class="brd_row">
+                <div class="letter" style="background-color: #545454;">W</div>
+                <div class="letter" style="background-color: #545454;">O</div>
+                <div class="letter" style="background-color: #545454;">R</div>
+                <div class="letter" style="background-color: #545454;">D</div>
+                <div class="letter" style="background-color: #545454;">S</div>
+            </div>
+            <p><span style="color: #545454">Gray</span> color means that the letter is not in the word</p>
+            <div class="brd_row">
+                <div class="letter" style="background-color: #545454;">P</div>
+                <div class="letter" style="background-color: #545454;">L</div>
+                <div class="letter" style="background-color: #545454;">A</div>
+                <div class="letter" style="background-color: #f3c237;">Y</div>
+                <div class="letter" style="background-color: #545454;">S</div>
+            </div>
+            <p><span style="color: #f3c237;">Yellow</span> color means that the letter is in the word, but in incorrect
+                position</p>
+            <div class="brd_row">
+                <div class="letter" style="background-color: #545454;">F</div>
+                <div class="letter" style="background-color: #79b851;">U</div>
+                <div class="letter" style="background-color: #79b851;">N</div>
+                <div class="letter" style="background-color: #79b851;">N</div>
+                <div class="letter" style="background-color: #79b851;">Y</div>
+            </div>
+        </div>
+        <p><span style="color: #79b851;">Green</span> color means that the letter is in the word and in the correct
+            place</p>
+        <p>Each row has a special event!</p>
+        <p>Try to guess the answer as fast as possible!</p>
+        <div class="button_container">
+            <button onclick="close_all();">Close</button>
+        </div>
+    </div>
+
+    <div id="alert">
+        <p>WARNING!</p>
+        <span id="alert-span"></span>
+    </div>
+
+    <script src="../word_list.js"></script>
+    <script src="../word_list2.js"></script>
+    <script src="check.js"></script>
+    <script src="typing.js"></script>
+</body>
+
+</html>
