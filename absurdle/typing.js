@@ -48,23 +48,22 @@ function typeLetter(text) {
             msg_alert("Evter a valid word!", 3000);
             return;
         }
-        console.log("PREVIOUS ANSWER: ", answer);
         let potential_answer = find_word(word, checks)
-        if (potential_answer != "" && check_word(word, answer).toString() != [0, 0, 0, 0, 0].toString()) { console.log(check_word(word, answer)); answer = potential_answer; }
-        console.log("NEW ANSWER: ", answer);
+        if (potential_answer != "" && check_word(word, answer).toString() != [0, 0, 0, 0, 0].toString()) { answer = potential_answer; }
         let check = check_word(word, answer), i = 1;
         let to_push = [word];
         for (let status of check) {
             to_push.push(status);
             let letter = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0];
             let button = document.querySelectorAll(`#keyboard button[letter="${letter.textContent}"`)[0];
+            let prev_color = button.style.getPropertyValue("--color");
             if (status == 0) {
                 letter.style.setProperty("--color", "#545454");
-                button.style.setProperty("--color", "#545454");
+                if (prev_color != "#79b851" && prev_color != "#f3c237") { button.style.setProperty("--color", "#545454"); };
             }
             else if (status == 1) {
                 letter.style.setProperty("--color", "#f3c237");
-                button.style.setProperty("--color", "#f3c237");
+                if (prev_color != "#79b851") { button.style.setProperty("--color", "#f3c237"); };
             }
             else {
                 letter.style.setProperty("--color", "#79b851");

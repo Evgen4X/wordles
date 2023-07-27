@@ -73,19 +73,18 @@ function decode(text) {
 
 function get_link() {
     let text = document.getElementById("link_input").value.toUpperCase();
-    if (text.length != 5) {
+    if (text.length != 10) {
         msg_alert("The number must be 10 digits long!", 3000);
         return;
     }
     for (let i of text) {
         if (!"1234567890".includes(i)) {
-            msg_alert("Invalid number!", 3000);
+            msg_alert("Invalid number!\nExample of a valid one: 1234567890", 3000);
             return;
         }
     }
     let url = new URL(window.location.href);
     url.searchParams.set("number", encode(text));
-    alert(text + " --- " + url);
     let link = document.getElementById("link");
     link.setAttribute("href", url);
     link.textContent = "Link is here";

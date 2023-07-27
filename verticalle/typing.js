@@ -55,13 +55,14 @@ function typeLetter(text) {
         for (let status of check) {
             let letter = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0];
             let button = document.querySelectorAll(`#keyboard button[letter="${letter.textContent}"`)[0];
+            let prev_color = button.style.getPropertyValue("--color");
             if (status == 0) {
                 letter.style.setProperty("--color", "#545454");
-                button.style.setProperty("--color", "#545454");
+                if (prev_color != "#79b851" && prev_color != "#f3c237") { button.style.setProperty("--color", "#545454"); };
             }
             else if (status == 1) {
                 letter.style.setProperty("--color", "#f3c237");
-                button.style.setProperty("--color", "#f3c237");
+                if (prev_color != "#79b851") { button.style.setProperty("--color", "#f3c237"); };
             }
             else {
                 letter.style.setProperty("--color", "#79b851");

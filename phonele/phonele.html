@@ -20,11 +20,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -34,11 +34,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -48,11 +48,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -62,11 +62,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -76,11 +76,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -90,11 +90,11 @@
             <button class="letter" index="1"></button>
             <button class="letter" index="2"></button>
             <button class="letter" index="3"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="4"></button>
             <button class="letter" index="5"></button>
             <button class="letter" index="6"></button>
-            <button class="letter" index="0">-</button>
+            <button class="letter">-</button>
             <button class="letter" index="7"></button>
             <button class="letter" index="8"></button>
             <button class="letter" index="9"></button>
@@ -130,7 +130,7 @@
     <div class="absolute settings"> <!--Settings-->
         <span class="title">Settings</span>
         <div class="button_container">
-            <button onclick="show_custom();">Custom Wordle</button>
+            <button onclick="show_custom();">Custom phonele</button>
             <button onclick="close_all();">Back</button>
         </div>
         <div class="button_container">
@@ -139,9 +139,9 @@
     </div>
 
     <div class="absolute custom"> <!--Custom word-->
-        <span class=" title">Create custom Wordle!</span>
-        <span class="cw_subtitle">The word must be 5 symbols long</span>
-        <input id="link_input" type="text" name="answer" placeholder="Word">
+        <span class=" title">Create custom phonele!</span>
+        <span class="cw_subtitle">The number must be 10 digits long</span>
+        <input id="link_input" type="text" name="answer" placeholder="Number" pattern="[0-9]{10}">
         <a id="link"></a>
         <div class="button_container">
             <button onclick="get_link();">Generate link</button>
