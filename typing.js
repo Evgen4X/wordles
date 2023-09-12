@@ -40,72 +40,30 @@ function typeLetter(text) {
 			msg_alert("Evter a valid word!", 3000);
 			return;
 		}
-		let check = check_word(word, answer);
-		let r = 0,
-			y = 0,
-			g = 0;
-		if (check.every((status) => status == 0)) {
-			r = letters_number;
-			let index = document.querySelector('.brd_row[status="active"]').getAttribute("index");
-			for (let i = 1; i <= index; i++) {
-				for (let j = 1; j < letters_number + 1; j++) {
-					let letter = document.querySelector(`.brd_row[index="${i}"] .letter[index="${j}"]`);
-					if (word.includes(letter.textContent)) {
-						letter.style.backgroundColor = "#c21b1b";
-						if (i == index) {
-							let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
-							letter.style.animation = `rotate 0.8s linear ${(j - 1) * 200 + "ms"} 1 normal forwards`;
-							button.style.backgroundColor = "#c21b1b";
-						}
-					}
+		let check = check_word(word, answer),
+			i = 1;
+		for (let status of check) {
+			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
+			let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+			let prev_color = button.style.getPropertyValue("--color");
+			if (status == 0) {
+				letter.style.setProperty("--color", "#545454");
+				if (prev_color != "#79b851" && prev_color != "#f3c237") {
+					button.style.setProperty("--color", "#545454");
 				}
-			}
-		} else if (check.every((status) => status == 2)) {
-			g = letters_number;
-			for (let i = 1; i < letters_number + 1; i++) {
-				let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-				let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
-				letter.style.backgroundColor = "#79b851";
-				button.style.backgroundColor = "#79b851";
-				letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-			}
-		} else {
-			let i = 1;
-			for (let status of check) {
-				let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-				let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
-				if (status == 0) {
-					r++;
-				} else if (status == 1) {
-					y++;
-				} else {
-					g++;
+			} else if (status == 1) {
+				letter.style.setProperty("--color", "#f3c237");
+				if (prev_color != "#79b851") {
+					button.style.setProperty("--color", "#f3c237");
 				}
-				if (button.style.backgroundColor != "#c21b1b") {
-					button.style.backgroundColor = "#c3c3c3";
-				}
-				letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-				i++;
+			} else {
+				letter.style.setProperty("--color", "#79b851");
+				button.style.setProperty("--color", "#79b851");
 			}
+			letter.style.animation = `to_color 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+			button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+			i++;
 		}
-		let green = document.querySelector('.brd_row[status="active"] .green');
-		setTimeout(() => {
-			green.textContent = g;
-		}, 1700);
-
-		green.style.animation = "rotate 0.8s linear 1200ms 1 normal forwards";
-
-		let yellow = document.querySelector('.brd_row[status="active"] .yellow');
-		setTimeout(() => {
-			yellow.textContent = y;
-		}, 1900);
-		yellow.style.animation = "rotate 0.8s linear 1400ms 1 normal forwards";
-
-		let red = document.querySelector('.brd_row[status="active"] .red');
-		setTimeout(() => {
-			red.textContent = r;
-		}, 2100);
-		red.style.animation = "rotate 0.8s linear 1600ms 1 normal forwards";
 		if (check.every((status) => status == 2)) {
 			setTimeout(() => {
 				show_game_over(true);
@@ -113,7 +71,7 @@ function typeLetter(text) {
 			return;
 		}
 		let index = parseInt(row.getAttribute("index"));
-		if (index == 8) {
+		if (index == 6) {
 			setTimeout(() => {
 				show_game_over(false);
 			}, 2000);
@@ -131,7 +89,7 @@ function typeLetter(text) {
 			return;
 		}
 		let index = parseInt(letter.getAttribute("index"));
-		let target = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index - 1}"]`)[0];
+		let target = document.querySelector(`.brd_row[status="active"] .letter[index="${index - 1}"]`);
 		target.textContent = "";
 		target.setAttribute("status", "active");
 		letter.setAttribute("status", "none");

@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="randle2.css" />
-		<link rel="icon" href="randle2_icon.png" />
+		<link rel="stylesheet" href="dontle.css" />
+		<link rel="icon" href="dontle_icon.png" />
 		<meta charset="UTF-8" />
-		<title>Randle 2!</title>
+		<title>Don'tle!</title>
 	</head>
 
 	<body>
 		<header>
-			<button onclick="show_how_to();" style="background-color: #000; border: none; color: white">?</button>
+			<button onclick="show('how_to');" style="background-color: #000; border: none; color: white">?</button>
 			<div class="button_container" style="width: 10%">
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
-			<a href="../main/index.html" class="title">RANDLE 2</a>
-			<button onclick="show_settings();" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+			<a href="../main/index.html" class="title">DON'TLE</a>
+			<button onclick="show('settings');" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
 		</header>
+		<div class="flex"><span style="color: white" id="undos_counter">Undos used: 0 / 5</span></div>
 		<div class="board mainboard"></div>
 		<span id="error"></span>
 		<div id="keyboard">
+			<div class="kb_row">
+				<button class="kb_key NAL" id="undo_btn" onclick="undo();" style="aspect-ratio: 2 / 1">Undo</button>
+				<button class="kb_key NAL" onclick="show('undos');" style="aspect-ratio: 2 / 1">Show undos</button>
+			</div>
 			<div class="kb_row">
 				<button class="kb_key">Q</button>
 				<button class="kb_key">W</button>
@@ -55,14 +60,17 @@
 			</div>
 		</div>
 
-		<div class="absolute event_tooltip">
-			<!-- event tooltip -->
-			<span class="title"></span>
-			<span id="description"></span>
+		<div class="absolute undos">
+			<!-- Undos-->
+			<span class="title">Previous undos</span>
+			<div id="undos_table"></div>
+			<div class="button_container">
+				<button onclick="close_all();">Back</button>
+			</div>
 		</div>
 
 		<div class="absolute go">
-			<!--Game over -->
+			<!-- Game over -->
 			<span class="title"></span>
 			<span class="go_answer"></span>
 			<div class="button_container">
@@ -73,7 +81,7 @@
 		</div>
 
 		<div class="absolute settings">
-			<!--Settings-->
+			<!-- Settings-->
 			<span class="title">Settings</span>
 			<div class="letter_amount">
 				<label>Letters: </label>
@@ -92,15 +100,18 @@
 				<button class="amount_of_letters">15</button>
 			</div>
 			<div class="button_container">
-				<button onclick="show_custom();">Custom randle 2</button>
+				<button onclick="show('custom');">Custom don'tle</button>
 				<button onclick="close_all();">Back</button>
+			</div>
+			<div class="button_container">
+				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
 			</div>
 		</div>
 
 		<div class="absolute custom">
-			<!--Custom word-->
-			<span class="title">Create custom randle 2 2!</span>
-			<span class="cw_subtitle">The word must be from 3 to 15 letters long</span>
+			<!-- Custom word-->
+			<span class="title">Create custom dont'le!</span>
+			<span class="cw_subtitle">The word must be 5 symbols long</span>
 			<input id="link_input" type="text" name="answer" placeholder="Word" />
 			<a id="link"></a>
 			<div class="button_container">
@@ -138,8 +149,8 @@
 				</div>
 			</div>
 			<p><span style="color: #79b851">Green</span> color means that the letter is in the word and in the correct place</p>
-			<p>Unlike the Randle, in Randle 2 each <b>column</b> has an event</p>
 			<p>Try to guess the answer as fast as possible!</p>
+			<p>You can also click on a letter to hide/show it</p>
 			<div class="button_container">
 				<button onclick="close_all();">Close</button>
 			</div>

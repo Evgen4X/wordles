@@ -16,7 +16,7 @@ function check_word(word, answer) {
 
 	// Second pass: check for letters in the wrong position
 	for (let i = 0; i < word.length; i++) {
-		if (result[i] != 2) {
+		if (result[i] !== 2) {
 			const letterIndex = remainingLetters.indexOf(word[i]);
 			if (letterIndex !== -1) {
 				result[i] = 1;
@@ -27,53 +27,6 @@ function check_word(word, answer) {
 		}
 	}
 
-	return result;
-}
-
-function check_word_reversed(word, answer) {
-	const result = [];
-
-	// First pass: check for letters in the correct position
-	for (let i = 0; i < word.length; i++) {
-		if (word[i] === answer[i]) {
-			result[i] = 2;
-		}
-	}
-	// Second pass: check for blues
-	for (let i = 0; i < word.length; i++) {
-		if (result[i] !== 2) {
-			const index = word.indexOf(answer[i]);
-			if (index != -1) {
-				result[i] = 3;
-			} else {
-				result[i] = 0;
-			}
-		}
-	}
-	return result;
-}
-
-function check_word_alphabetical(word, answer) {
-	const result = [];
-	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-	// First pass: check for letters in the correct position
-	for (let i = 0; i < word.length; i++) {
-		if (word[i] === answer[i]) {
-			result[i] = 2;
-		}
-	}
-	// Second pass: check for incorrect letters
-	for (let i = 0; i < word.length; i++) {
-		if (result[i] === 2) {
-			continue;
-		}
-		if (alphabet.indexOf(word[i]) > alphabet.indexOf(answer[i])) {
-			result[i] = 4;
-		} else {
-			result[i] = 5;
-		}
-	}
 	return result;
 }
 
@@ -97,10 +50,34 @@ function new_game() {
 	window.location.href = url;
 }
 
+function encode(text) {
+	let ans = "",
+		n,
+		chr;
+	for (let i of text) {
+		n = Math.floor(Math.random() * 30);
+		chr = i.charCodeAt(0);
+		ans += String.fromCharCode(chr - n) + String.fromCharCode(chr + n);
+	}
+	return ans;
+}
+
+function decode(text) {
+	let ans = "",
+		s1,
+		s2;
+	for (let i = 0; i < text.length; i += 2) {
+		s1 = text[i].charCodeAt(0);
+		s2 = text[i + 1].charCodeAt(0);
+		ans += String.fromCharCode((s1 + s2) / 2);
+	}
+	return ans;
+}
+
 function get_link() {
 	let text = document.getElementById("link_input").value.toUpperCase();
-	if (text.length < 3 || text.length > 15) {
-		msg_alert("The word must be from 3 to 15 letters long!", 3000);
+	if (text.length != 5) {
+		msg_alert("The word must be 5 symbols long!", 3000);
 		return;
 	}
 	for (let i of text) {
@@ -117,29 +94,31 @@ function get_link() {
 	return;
 }
 
-function has_repeated(text) {
-	for (let i = 0; i < text.length; i++) {
-		if (text.indexOf(text[i], i + 1) != -1) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function show_settings() {
-	document.querySelector(".settings").style.display = "flex";
-}
-
-function show_custom() {
-	document.querySelector(".custom").style.display = "flex";
-}
-
 function close_all() {
 	document.querySelectorAll(".absolute").forEach((el) => {
 		el.style.display = "none";
 	});
 }
 
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
+function show(id) {
+	set_undos();
+	document.querySelector(`.${id}`).style.display = "flex";
+}
+
+function hide_letter(event) {
+	const target = event.target;
+	if (target.style.opacity == "0") {
+		target.style.opacity = "1";
+	} else {
+		target.style.opacity = "0";
+	}
+}
+
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
+	});
+	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
 }

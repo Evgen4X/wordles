@@ -1,180 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<link rel="stylesheet" href="alphabetle.css" />
+		<link rel="icon" href="alphabetle_icon.png" />
+		<meta charset="UTF-8" />
+		<title>Alphabetle!</title>
+	</head>
 
-<head>
-    <link rel="stylesheet" href="alphabetle.css">
-    <link rel="icon" href="alphabetle_icon.png">
-    <meta charset="UTF-8">
-    <title>Alphabetle!</title>
-</head>
+	<body>
+		<header>
+			<button onclick="show_how_to();" style="background-color: #000; border: none; color: white">?</button>
+			<div class="button_container" style="width: 10%">
+				<button onclick="show_game_over();">GIVE UP</button>
+			</div>
+			<a href="../main/index.html" class="title">ALPHABETLE</a>
+			<button onclick="show_settings();" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+		</header>
+		<div class="board mainboard"></div>
+		<span id="error"></span>
+		<div id="keyboard">
+			<div class="kb_row">
+				<button class="kb_key">Q</button>
+				<button class="kb_key">W</button>
+				<button class="kb_key">E</button>
+				<button class="kb_key">R</button>
+				<button class="kb_key">T</button>
+				<button class="kb_key">Y</button>
+				<button class="kb_key">U</button>
+				<button class="kb_key">I</button>
+				<button class="kb_key">O</button>
+				<button class="kb_key">P</button>
+			</div>
+			<div class="kb_row">
+				<button class="kb_key">A</button>
+				<button class="kb_key">S</button>
+				<button class="kb_key">D</button>
+				<button class="kb_key">F</button>
+				<button class="kb_key">G</button>
+				<button class="kb_key">H</button>
+				<button class="kb_key">J</button>
+				<button class="kb_key">K</button>
+				<button class="kb_key">L</button>
+			</div>
+			<div class="kb_row">
+				<button class="kb_key" style="aspect-ratio: 2 / 1">Enter</button>
+				<button class="kb_key">Z</button>
+				<button class="kb_key">X</button>
+				<button class="kb_key">C</button>
+				<button class="kb_key">V</button>
+				<button class="kb_key">B</button>
+				<button class="kb_key">N</button>
+				<button class="kb_key">M</button>
+				<button class="kb_key">⌫</button>
+			</div>
+		</div>
 
-<body>
-    <header>
-        <button onclick="show_how_to();" style="background-color: #000; border: none; color:white">?</button>
-        <a href="../main/index.html" class="title">ALPHABETLE</a>
-        <button onclick="show_settings();" style="background-color: #000; border: none;"><img src="../settings.png"
-                style="width: 1.5em; height: 1.5em"></button>
-    </header>
-    <div class="board">
-        <div class="brd_row" index="1">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-        <div class="brd_row" index="2">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-        <div class="brd_row" index="3">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-        <div class="brd_row" index="4">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-        <div class="brd_row" index="5">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-        <div class="brd_row" index="6">
-            <button class="letter" index="1"></button>
-            <button class="letter" index="2"></button>
-            <button class="letter" index="3"></button>
-            <button class="letter" index="4"></button>
-            <button class="letter" index="5"></button>
-        </div>
-    </div>
-    <span id="error"></span>
-    <div id="keyboard">
-        <div class="kb_row">
-            <button class="kb_key">Q</button>
-            <button class="kb_key">W</button>
-            <button class="kb_key">E</button>
-            <button class="kb_key">R</button>
-            <button class="kb_key">T</button>
-            <button class="kb_key">Y</button>
-            <button class="kb_key">U</button>
-            <button class="kb_key">I</button>
-            <button class="kb_key">O</button>
-            <button class="kb_key">P</button>
-        </div>
-        <div class="kb_row">
-            <button class="kb_key">A</button>
-            <button class="kb_key">S</button>
-            <button class="kb_key">D</button>
-            <button class="kb_key">F</button>
-            <button class="kb_key">G</button>
-            <button class="kb_key">H</button>
-            <button class="kb_key">J</button>
-            <button class="kb_key">K</button>
-            <button class="kb_key">L</button>
-        </div>
-        <div class="kb_row">
-            <button class="kb_key" style="aspect-ratio: 2 / 1;">Enter</button>
-            <button class="kb_key">Z</button>
-            <button class="kb_key">X</button>
-            <button class="kb_key">C</button>
-            <button class="kb_key">V</button>
-            <button class="kb_key">B</button>
-            <button class="kb_key">N</button>
-            <button class="kb_key">M</button>
-            <button class="kb_key">⌫</button>
-        </div>
-    </div>
+		<div class="absolute go">
+			<!--Game over -->
+			<span class="title"></span>
+			<span class="go_answer"></span>
+			<div class="button_container">
+				<button onclick="new_game();">Play again</button>
+				<button onclick="window.location.href = '../main/index.html';">Other games</button>
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
 
-    <div class="absolute go"> <!--Game over -->
-        <span class="title"></span>
-        <span class="go_answer"></span>
-        <div class="button_container">
-            <button onclick="new_game();">Play again</button>
-            <button onclick="window.location.href = '../main/index.html';">Other games</button>
-            <button onclick="close_all();">Close</button>
-        </div>
-    </div>
+		<div class="absolute settings">
+			<!--Settings-->
+			<span class="title">Settings</span>
+			<div class="letter_amount">
+				<label>Letters: </label>
+				<button class="amount_of_letters">3</button>
+				<button class="amount_of_letters">4</button>
+				<button class="amount_of_letters">5</button>
+				<button class="amount_of_letters">6</button>
+				<button class="amount_of_letters">7</button>
+				<button class="amount_of_letters">8</button>
+				<button class="amount_of_letters">9</button>
+				<button class="amount_of_letters">10</button>
+				<button class="amount_of_letters">11</button>
+				<button class="amount_of_letters">12</button>
+				<button class="amount_of_letters">13</button>
+				<button class="amount_of_letters">14</button>
+				<button class="amount_of_letters">15</button>
+			</div>
+			<div class="button_container">
+				<button onclick="show_custom();">Custom alphabetle</button>
+				<button onclick="close_all();">Back</button>
+			</div>
+			<div class="button_container">
+				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
+			</div>
+		</div>
 
-    <div class="absolute settings"> <!--Settings-->
-        <span class="title">Settings</span>
-        <div class="button_container">
-            <button onclick="show_custom();">Custom alphabetle</button>
-            <button onclick="close_all();">Back</button>
-        </div>
-        <div class="button_container">
-            <button id="hide_all" onclick="hide_all();">Hide all letters</button>
-        </div>
-    </div>
+		<div class="absolute custom">
+			<!--Custom word-->
+			<span class="title">Create custom alphabetle!</span>
+			<span class="cw_subtitle">The word must be from 3 to 15 letters long</span>
+			<input id="link_input" type="text" name="answer" placeholder="Word" />
+			<a id="link"></a>
+			<div class="button_container">
+				<button onclick="get_link();">Generate link</button>
+				<button onclick="close_all();">Cancel</button>
+			</div>
+		</div>
 
-    <div class="absolute custom"> <!--Custom word-->
-        <span class="title">Create custom alphabetle!</span>
-        <span class="cw_subtitle">The word must be 5 symbols long</span>
-        <input id="link_input" type="text" name="answer" placeholder="Word">
-        <a id="link"></a>
-        <div class="button_container">
-            <button onclick="get_link();">Generate link</button>
-            <button onclick="close_all();">Cancel</button>
-        </div>
-    </div>
+		<div class="absolute how_to">
+			<span class="title">How to play?</span>
+			<p>Enter a word</p>
+			<div class="board">
+				<div class="brd_row">
+					<div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em">W</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">O</div>
+					<div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em">R</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">D</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">S</div>
+				</div>
+				<p><span style="color: #ffaa00">Orange</span> means that the letter in that position is earlier in the alphabet</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em">P</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">L</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">A</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">Y</div>
+					<div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0">S</div>
+				</div>
+				<p><span style="color: #b700ff">Purple</span> means that the correct letter is later in the alphabet</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em">F</div>
+					<div class="letter" style="background-color: #79b851">U</div>
+					<div class="letter" style="background-color: #79b851">N</div>
+					<div class="letter" style="background-color: #79b851">N</div>
+					<div class="letter" style="background-color: #79b851">Y</div>
+				</div>
+			</div>
+			<p><span style="color: #79b851">Green</span> means that the letter is correct</p>
+			<p>Try to guess the answer as fast as possible!</p>
+			<p>You can also click on a letter to hide/show it</p>
+			<div class="button_container">
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
 
-    <div class="absolute how_to">
-        <span class="title">How to play?</span>
-        <p>Enter a word</p>
-        <div class="board">
-            <div class="brd_row">
-                <div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em;">W</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">O</div>
-                <div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em;">R</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">D</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">S</div>
-            </div>
-            <p><span style="color: #ffaa00">Orange</span> means that the letter in that position is earlier in the
-                alphabet</p>
-            <div class="brd_row">
-                <div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em;">P</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">L</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">A</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">Y</div>
-                <div class="letter" style="background-color: #b700ff; border-radius: 0.5em 0.5em 0 0;">S</div>
-            </div>
-            <p><span style="color: #b700ff">Purple</span> means that the correct letter is later in the alphabet</p>
-            <div class="brd_row">
-                <div class="letter" style="background-color: #ffaa00; border-radius: 0 0 0.5em 0.5em;">F</div>
-                <div class="letter" style="background-color: #79b851;">U</div>
-                <div class="letter" style="background-color: #79b851;">N</div>
-                <div class="letter" style="background-color: #79b851;">N</div>
-                <div class="letter" style="background-color: #79b851;">Y</div>
-            </div>
-        </div>
-        <p><span style="color: #79b851">Green</span> means that the letter is correct</p>
-        <p>Try to guess the answer as fast as possible!</p>
-        <p>You can also click on a letter to hide/show it</p>
-        <div class="button_container">
-            <button onclick="close_all();">Close</button>
-        </div>
-    </div>
+		<div id="alert">
+			<p>WARNING!</p>
+			<span id="alert-span"></span>
+		</div>
 
-    <div id="alert">
-        <p>WARNING!</p>
-        <span id="alert-span"></span>
-    </div>
-
-    <script src="../word_list.js"></script>
-    <script src="../word_list2.js"></script>
-    <script src="check.js"></script>
-    <script src="typing.js"></script>
-</body>
-
+		<script src="../word_list3.js"></script>
+		<script src="../setup.js"></script>
+		<script src="alphabetle.js"></script>
+		<script src="check.js"></script>
+		<script src="typing.js"></script>
+	</body>
 </html>

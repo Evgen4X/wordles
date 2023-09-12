@@ -30,8 +30,8 @@ function keyType(event) {
 }
 
 function typeLetter(text) {
-    const row = document.querySelectorAll('.brd_row[status="active"]');
-    const letter = document.querySelectorAll('.letter[status="active"]');
+    const row = document.querySelector('.brd_row[status="active"]');
+    const letter = document.querySelector('.letter[status="active"]');
     document.getElementById("error").textContent = "";
 
     if (text == "Enter") {
@@ -67,12 +67,12 @@ function typeLetter(text) {
             setTimeout(() => { show_game_over(true); }, 4000);
             return;
         }
-        let index = parseInt(row[0].getAttribute("index"));
+        let index = parseInt(row.getAttribute("index"));
         if (index == 6) {
             setTimeout(() => { show_game_over(false); }, 4000);
             return;
         }
-        row[0].setAttribute("status", "filled");
+        row.setAttribute("status", "filled");
         let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
         next_row.setAttribute("status", "active");
         set_first();
@@ -84,17 +84,17 @@ function typeLetter(text) {
             target[0].setAttribute("status", "active");
             return;
         }
-        let index = parseInt(letter[0].getAttribute("index"));
+        let index = parseInt(letter.getAttribute("index"));
         let target = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index - 1}"]`)[0];
         target.textContent = "";
         target.setAttribute("status", "active");
-        letter[0].setAttribute("status", "none");
+        letter.setAttribute("status", "none");
     }
     else {
-        letter[0].textContent = text;
-        letter[0].setAttribute("status", "filled");
-        if (letter[0].getAttribute("index") != 10) {
-            let index = parseInt(letter[0].getAttribute("index"));
+        letter.textContent = text;
+        letter.setAttribute("status", "filled");
+        if (letter.getAttribute("index") != 10) {
+            let index = parseInt(letter.getAttribute("index"));
             let next = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index + 1}"]`);
             next[0].setAttribute("status", "active");
         }

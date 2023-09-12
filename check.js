@@ -16,7 +16,7 @@ function check_word(word, answer) {
 
 	// Second pass: check for letters in the wrong position
 	for (let i = 0; i < word.length; i++) {
-		if (result[i] != 2) {
+		if (result[i] !== 2) {
 			const letterIndex = remainingLetters.indexOf(word[i]);
 			if (letterIndex !== -1) {
 				result[i] = 1;
@@ -30,65 +30,8 @@ function check_word(word, answer) {
 	return result;
 }
 
-function check_word_reversed(word, answer) {
-	const result = [];
-
-	// First pass: check for letters in the correct position
-	for (let i = 0; i < word.length; i++) {
-		if (word[i] === answer[i]) {
-			result[i] = 2;
-		}
-	}
-	// Second pass: check for blues
-	for (let i = 0; i < word.length; i++) {
-		if (result[i] !== 2) {
-			const index = word.indexOf(answer[i]);
-			if (index != -1) {
-				result[i] = 3;
-			} else {
-				result[i] = 0;
-			}
-		}
-	}
-	return result;
-}
-
-function check_word_alphabetical(word, answer) {
-	const result = [];
-	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-	// First pass: check for letters in the correct position
-	for (let i = 0; i < word.length; i++) {
-		if (word[i] === answer[i]) {
-			result[i] = 2;
-		}
-	}
-	// Second pass: check for incorrect letters
-	for (let i = 0; i < word.length; i++) {
-		if (result[i] === 2) {
-			continue;
-		}
-		if (alphabet.indexOf(word[i]) > alphabet.indexOf(answer[i])) {
-			result[i] = 4;
-		} else {
-			result[i] = 5;
-		}
-	}
-	return result;
-}
-
 function set_first() {
 	document.querySelectorAll('.brd_row[status="active"] .letter[index="1"]')[0].setAttribute("status", "active");
-}
-
-function msg_alert(msg, time) {
-	let msgbox = document.querySelector("#alert"),
-		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.textContent = msg;
-	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
-	setTimeout(() => {
-		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
-	}, time);
 }
 
 function new_game() {
@@ -117,15 +60,6 @@ function get_link() {
 	return;
 }
 
-function has_repeated(text) {
-	for (let i = 0; i < text.length; i++) {
-		if (text.indexOf(text[i], i + 1) != -1) {
-			return true;
-		}
-	}
-	return false;
-}
-
 function show_settings() {
 	document.querySelector(".settings").style.display = "flex";
 }
@@ -142,4 +76,13 @@ function close_all() {
 
 function show_how_to() {
 	document.querySelector(".how_to").style.display = "flex";
+}
+
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
+	});
+	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
 }
