@@ -35,8 +35,6 @@ function generate(cols, rows) {
 
 	answers = answers.filter((answer) => answer.length == cols);
 
-	console.log(answers);
-
 	if (params.get("word") == null) {
 		answer = answers[Math.floor(Math.random() * answers.length)];
 	} else {

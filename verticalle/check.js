@@ -18,7 +18,6 @@ function check_word_vertical(word, answer, position) {
 	// Second pass: check for letters in the wrong position
 	for (let i = 0; i < word.length; i++) {
 		const letterIndex = remainingLetters.indexOf(word[i]);
-		console.log(`Letter: ${word[i]}, status: ${result[i]}, index: ${letterIndex}, letters: ${remainingLetters}`);
 		if (result[i] != 2) {
 			if (letterIndex !== -1) {
 				result[i] = 1;

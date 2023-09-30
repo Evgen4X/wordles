@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="numberle.css" />
+		<link rel="icon" href="numberle_icon.png" />
+		<meta charset="UTF-8" />
+		<title>Numberle!</title>
+	</head>
+
+	<body>
+		<header>
+			<button onclick="show_how_to();" style="background-color: #000; border: none; color: white">?</button>
+			<div class="button_container" style="width: 10%">
+				<button onclick="show_game_over();">GIVE UP</button>
+			</div>
+			<a href="../main/index.html" class="title">NUMBERLE</a>
+			<button onclick="show_settings();" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+		</header>
+		<div class="board mainboard"></div>
+		<span id="error"></span>
+		<div id="keyboard">
+			<button class="kb_key" style="aspect-ratio: 2 / 1">Enter</button>
+			<button class="kb_key">1</button>
+			<button class="kb_key">2</button>
+			<button class="kb_key">3</button>
+			<button class="kb_key">4</button>
+			<button class="kb_key">5</button>
+			<button class="kb_key">6</button>
+			<button class="kb_key">7</button>
+			<button class="kb_key">8</button>
+			<button class="kb_key">9</button>
+			<button class="kb_key">0</button>
+			<button class="kb_key">⌫</button>
+		</div>
+
+		<div class="absolute go">
+			<!--Game over -->
+			<span class="title"></span>
+			<span class="go_answer"></span>
+			<div class="button_container">
+				<button onclick="new_game();">Play again</button>
+				<button onclick="window.location.href = '../main/index.html';">Other games</button>
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
+
+		<div class="absolute settings">
+			<!--Settings-->
+			<span class="title">Settings</span>
+			<div class="letter_amount">
+				<label>Letters: </label>
+				<button class="amount_of_letters">1</button>
+				<button class="amount_of_letters">2</button>
+				<button class="amount_of_letters">3</button>
+				<button class="amount_of_letters">4</button>
+				<button class="amount_of_letters">5</button>
+				<button class="amount_of_letters">6</button>
+				<button class="amount_of_letters">7</button>
+				<button class="amount_of_letters">8</button>
+				<button class="amount_of_letters">9</button>
+				<button class="amount_of_letters">10</button>
+				<button class="amount_of_letters">11</button>
+				<button class="amount_of_letters">12</button>
+				<button class="amount_of_letters">13</button>
+				<button class="amount_of_letters">14</button>
+				<button class="amount_of_letters">15</button>
+				<button class="amount_of_letters">16</button>
+				<button class="amount_of_letters">17</button>
+				<button class="amount_of_letters">18</button>
+				<button class="amount_of_letters">19</button>
+				<button class="amount_of_letters">20</button>
+			</div>
+			<div class="button_container">
+				<button onclick="show_custom();">Custom numberle</button>
+				<button onclick="close_all();">Back</button>
+			</div>
+			<div class="button_container">
+				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
+			</div>
+		</div>
+
+		<div class="absolute custom">
+			<!--Custom word-->
+			<span class="title">Create custom numberle!</span>
+			<span class="cw_subtitle">The number must be 1-20 digits long</span>
+			<input id="link_input" type="text" name="answer" placeholder="Number" pattern="[0-9]{10}" />
+			<a id="link"></a>
+			<div class="button_container">
+				<button onclick="get_link();">Generate link</button>
+				<button onclick="close_all();">Cancel</button>
+			</div>
+		</div>
+
+		<div class="absolute go">
+			<!--Game over -->
+			<span class="title"></span>
+			<span class="go_answer"></span>
+			<div class="button_container">
+				<button onclick="new_game();">Play again</button>
+				<button onclick="//return to the main">Other games</button>
+			</div>
+		</div>
+
+		<div class="absolute how_to" style="width: 50%">
+			<span class="title">How to play?</span>
+			<p>Enter a phone number</p>
+			<div class="board">
+				<div class="brd_row">
+					<div class="letter" style="background-color: #545454">1</div>
+					<div class="letter" style="background-color: #545454">2</div>
+					<div class="letter" style="background-color: #545454">1</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #545454">1</div>
+					<div class="letter" style="background-color: #545454">1</div>
+					<div class="letter" style="background-color: #545454">2</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #545454">0</div>
+					<div class="letter" style="background-color: #545454">0</div>
+					<div class="letter" style="background-color: #545454">0</div>
+					<div class="letter" style="background-color: #545454">0</div>
+				</div>
+				<p><span style="color: #545454">Gray</span> color means that the digit is not in the number</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #545454">4</div>
+					<div class="letter" style="background-color: #545454">4</div>
+					<div class="letter" style="background-color: #545454">4</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #f3c237">5</div>
+					<div class="letter" style="background-color: #545454">5</div>
+					<div class="letter" style="background-color: #545454">5</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #f3c237">6</div>
+					<div class="letter" style="background-color: #f3c237">6</div>
+					<div class="letter" style="background-color: #545454">6</div>
+					<div class="letter" style="background-color: #545454">6</div>
+				</div>
+				<p><span style="color: #f3c237">Yellow</span> color means that the digit is in the number, but in incorrect position</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #79b851">5</div>
+					<div class="letter" style="background-color: #79b851">6</div>
+					<div class="letter" style="background-color: #79b851">6</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #79b851">8</div>
+					<div class="letter" style="background-color: #79b851">8</div>
+					<div class="letter" style="background-color: #79b851">8</div>
+					<div class="letter">-</div>
+					<div class="letter" style="background-color: #79b851">7</div>
+					<div class="letter" style="background-color: #79b851">7</div>
+					<div class="letter" style="background-color: #79b851">9</div>
+					<div class="letter" style="background-color: #79b851">9</div>
+				</div>
+			</div>
+			<p><span style="color: #79b851">Green</span> color means that the digit is in the number and in the correct place</p>
+			<p>Try to guess the answer as fast as possible!</p>
+			<p>You can also click on a number to hide/show it</p>
+			<div class="button_container">
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
+
+		<div id="alert">
+			<p>WARNING!</p>
+			<span id="alert-span"></span>
+		</div>
+
+		<script src="setup.js"></script>
+		<script src="check.js"></script>
+		<script src="typing.js"></script>
+	</body>
+</html>

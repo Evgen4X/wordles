@@ -1,3 +1,5 @@
+var kb_buttons, brd_rows, brd_letters, letters_number;
+
 function hide_letter(event) {
 	const target = event.target;
 	if (target.style.opacity == "0") {
@@ -27,16 +29,6 @@ function generate(cols, rows) {
 	brd_letters.forEach((letter) => {
 		letter.addEventListener("click", hide_letter);
 	});
-
-	answers = answers.filter((answer) => answer.length == cols);
-
-	if (params.get("word") == null) {
-		answer = answers[Math.floor(Math.random() * answers.length)];
-	} else {
-		answer = decode(params.get("word"));
-		msg_alert("That wordle may not use standart dictionary!", 7500);
-	}
-	check_dict = answers.includes(answer);
 }
 
 function encode(text) {
@@ -71,4 +63,26 @@ function msg_alert(msg, time) {
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
 	}, time);
+}
+
+function gen_answer(len) {
+	let gend_answer = "";
+	for (let i = 0; i < len; i++) {
+		gend_answer += Math.floor(Math.random() * 10);
+	}
+	return gend_answer;
+}
+
+const params = new URL(window.location.href).searchParams;
+var answer;
+
+if (params.get("length") == null) {
+	generate(5, 6);
+	answer = gen_answer(5);
+} else if (params.get("number") != null) {
+	generate(params.get("number").length / 2, 6);
+	answer = decode(params.get("number"));
+} else {
+	generate(parseInt(params.get("length")), 6);
+	answer = gen_answer(params.get("length"));
 }
