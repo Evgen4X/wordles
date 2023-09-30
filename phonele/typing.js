@@ -78,7 +78,7 @@ function typeLetter(text) {
         set_first();
     }
     if (text == "⌫") {
-        if (letter.length == 0) {
+        if (letter == null) {
             let target = document.querySelectorAll('.brd_row[status="active"] .letter[index="10"]');
             target[0].textContent = "";
             target[0].setAttribute("status", "active");

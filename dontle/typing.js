@@ -1,8 +1,12 @@
 var kb_buttons,
 	brd_rows,
 	brd_letters,
-	letters_number,
-	checked_letters = [];
+	letters_number;
+
+const checked_letters = {
+		letter_list: [],
+		status_list: []
+	};
 
 const game_over = document.querySelector(".go");
 
@@ -101,10 +105,27 @@ function typeLetter(text) {
 			msg_alert("Evter a valid word!", 3000);
 			return;
 		}
+		console.log(checked_letters);
+		for(let i = 0; i < letters_number; i++){
+			let current_letter = word[i].toUpperCase();
+			console.log("DEBUGGING: ", current_letter, word);
+			if (checked_letters["letter_list"].includes(current_letter)) {
+				if (answer.indexOf(current_letter) == -1) {
+					msg_alert(`"${current_letter}" has been already checked`, 2000);
+					return;
+				}
+				let index = i;
+				if (checked_letters["status_list"][index] == 1 && word[index] == index) {
+					msg_alert(`"${current_letter}" cannot be in the spot #${index + 1}`, 2000);
+					return;
+				}
+			}
+		}
 		let check = check_word(word, answer),
 			i = 1;
-		word.split().forEach((letter, index) => {
-			checked_letters.push((letter, check[index]));
+		word.split("").forEach((letter, index) => {
+			checked_letters["letter_list"].push(letter);
+			checked_letters["status_list"].push(check[index]);
 		});
 		for (let status of check) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
@@ -158,17 +179,6 @@ function typeLetter(text) {
 		target.setAttribute("status", "active");
 		letter.setAttribute("status", "none");
 	} else {
-		if (checked_letters.includes(text)) {
-			if (answer.indexOf(text) == -1) {
-				msg_alert(`"${text}" has been already checked`);
-				return;
-			}
-			let index = letter.getAttribute("index") - 1;
-			if (checked_letters[index] == 1 && answer.indexOf(text) == index) {
-				msg_alert(`"${text}" cannot be in the spot #${index + 1}`);
-				return;
-			}
-		}
 		letter.textContent = text;
 		letter.setAttribute("status", "filled");
 		if (letter.getAttribute("index") != letters_number) {
