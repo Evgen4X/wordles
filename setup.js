@@ -1,11 +1,20 @@
+function hide_letter(event) {
+	const target = event.target;
+	if (target.style.opacity == "0") {
+		target.style.opacity = "1";
+	} else {
+		target.style.opacity = "0";
+	}
+}
+
 function generate(cols, rows) {
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
 		for (let j = 1; j <= cols; j++) {
-			html += `<button state="gray" class="letter" index="${j}"></button>`;
+			html += `<button class="letter" index="${j}"></button>`;
 		}
-		html += `<div class="letter green"></div><div class="letter yellow"></div><div class="letter red"></div></div>`;
+		html += `</div>`;
 	}
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
@@ -16,7 +25,7 @@ function generate(cols, rows) {
 	brd_letters = document.querySelectorAll(".letter");
 	brd_letters[0].setAttribute("status", "active");
 	brd_letters.forEach((letter) => {
-		letter.addEventListener("click", () => {toggle(letter)});
+		letter.addEventListener("click", hide_letter);
 	});
 
 	answers = answers.filter((answer) => answer.length == cols);
@@ -28,48 +37,6 @@ function generate(cols, rows) {
 		msg_alert("That wordle may not use standart dictionary!", 7500);
 	}
 	check_dict = answers.includes(answer);
-
-	document.querySelector(".title").textContent = `WORD ${cols}00`;
-}
-
-var kb_buttons, brd_rows, brd_letters, letters_number;
-
-const params = new URL(window.location.href).searchParams;
-var answer, check_dict;
-
-if (params.get("length") == null) {
-	generate(5, 8);
-} else if (params.get("word") != null) {
-	generate(params.get("word").length / 2, 8);
-} else {
-	generate(parseInt(params.get("length")), 8);
-}
-
-function toggle(sender, state=null) {
-	// const sender = event.target;
-	if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(sender.textContent) == -1) {
-		return;
-	}
-	if(state == null){
-		state = sender.getAttribute("state");
-	}
-	if (state == "gray") {
-		sender.setAttribute("state", "red");
-		sender.style.backgroundColor = "#c21b1b";
-		return;
-	}
-	if (state == "red") {
-		sender.setAttribute("state", "yellow");
-		sender.style.backgroundColor = "#f3c237";
-		return;
-	}
-	if (state == "yellow") {
-		sender.setAttribute("state", "green");
-		sender.style.backgroundColor = "#79b851";
-		return;
-	}
-	sender.setAttribute("state", "gray");
-	sender.style.backgroundColor = "#888888";
 }
 
 function encode(text) {
@@ -104,13 +71,6 @@ function msg_alert(msg, time) {
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
 	}, time);
-}
-
-function clear_all(){
-	brd_letters.forEach(letter => {
-		toggle(letter, "green");
-	});
-	close_all();
 }
 
 function show_settings() {
