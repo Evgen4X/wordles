@@ -1,5 +1,3 @@
-var kb_buttons, brd_rows, brd_letters, letters_number;
-
 const game_over = document.querySelector(".go");
 
 function buttonType(event) {
