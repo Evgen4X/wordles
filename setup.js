@@ -1,92 +1,70 @@
-function hide_letter(event) {
-	const target = event.target;
-	if (target.style.opacity == "0") {
-		target.style.opacity = "1";
-	} else {
-		target.style.opacity = "0";
-	}
+function is_word(word) {
+	return answers.includes(word);
 }
 
-function generate(cols, rows) {
-	let html = "";
-	for (let i = 1; i <= rows; i++) {
-		html += `<div class="brd_row" index="${i}">`;
-		for (let j = 1; j <= cols; j++) {
-			html += `<button class="letter" index="${j}"></button>`;
+function check_word(word, answer) {
+	const result = [];
+	const remainingLetters = answer.split("");
+
+	// First pass: check for letters in the correct position
+	for (let i = 0; i < word.length; i++) {
+		if (word[i] === answer[i]) {
+			result[i] = 2;
+			remainingLetters[i] = null; // Mark the letter as used
 		}
-		html += `</div>`;
 	}
-	document.querySelector(".mainboard").innerHTML = html;
-	letters_number = cols;
 
-	kb_buttons = document.querySelectorAll(".kb_key");
-	brd_rows = document.querySelectorAll(".brd_row");
-	brd_rows[0].setAttribute("status", "active");
-	brd_letters = document.querySelectorAll(".letter");
-	brd_letters[0].setAttribute("status", "active");
-	brd_letters.forEach((letter) => {
-		letter.addEventListener("click", hide_letter);
-	});
-
-	answers = answers.filter((answer) => answer.length == cols);
-
-	if (params.get("word") == null) {
-		answer = answers[Math.floor(Math.random() * answers.length)];
-	} else {
-		answer = decode(params.get("word"));
-		msg_alert("That wordle may not use standart dictionary!", 7500);
+	// Second pass: check for letters in the wrong position
+	for (let i = 0; i < word.length; i++) {
+		if (result[i] !== 2) {
+			const letterIndex = remainingLetters.indexOf(word[i]);
+			if (letterIndex !== -1) {
+				result[i] = 1;
+				remainingLetters[letterIndex] = null; // Mark the letter as used
+			} else {
+				result[i] = 0;
+			}
+		}
 	}
-	check_dict = answers.includes(answer);
+
+	return result;
 }
 
-function encode(text) {
-	let ans = "",
-		n,
-		chr;
+function set_first() {
+	document.querySelectorAll('.brd_row[status="active"] .letter[index="1"]')[0].setAttribute("status", "active");
+}
+
+function new_game() {
+	let url = new URL(window.location.href);
+	url.searchParams.delete("word");
+	window.location.href = url;
+}
+
+function get_link() {
+	let text = document.getElementById("link_input").value.toUpperCase();
+	if (text.length < 3 || text.length > 15) {
+		msg_alert("The word must be from 3 to 15 letters long!", 3000);
+		return;
+	}
 	for (let i of text) {
-		n = Math.floor(Math.random() * 30);
-		chr = i.charCodeAt(0);
-		ans += String.fromCharCode(chr - n) + String.fromCharCode(chr + n);
+		if (!"QAZWSXEDCRFVTGBYHNUJMIKOLP".includes(i)) {
+			msg_alert("Invalid word!", 3000);
+			return;
+		}
 	}
-	return ans;
+	let url = new URL(window.location.href);
+	url.searchParams.set("word", encode(text));
+	let link = document.getElementById("link");
+	link.setAttribute("href", url);
+	link.textContent = "Link is here";
+	return;
 }
 
-function decode(text) {
-	let ans = "",
-		s1,
-		s2;
-	for (let i = 0; i < text.length; i += 2) {
-		s1 = text[i].charCodeAt(0);
-		s2 = text[i + 1].charCodeAt(0);
-		ans += String.fromCharCode((s1 + s2) / 2);
-	}
-	return ans;
-}
-
-function msg_alert(msg, time) {
-	let msgbox = document.querySelector("#alert"),
-		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.innerHTML = msg;
-	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
-	setTimeout(() => {
-		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
-	}, time);
-}
-
-function show_settings() {
-	document.querySelector(".settings").style.display = "flex";
-}
-
-function show_custom() {
-	document.querySelector(".custom").style.display = "flex";
-}
-
-function close_all() {
-	document.querySelectorAll(".absolute").forEach((el) => {
-		el.style.display = "none";
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
 	});
-}
-
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
+	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
 }
