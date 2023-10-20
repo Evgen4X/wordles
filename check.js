@@ -54,6 +54,7 @@ function get_link() {
 	}
 	let url = new URL(window.location.href);
 	url.searchParams.set("word", encode(text));
+	url.searchParams.set("length", text.length);
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
 	link.textContent = "Link is here";

@@ -81,8 +81,10 @@ function typeLetter(text) {
 				} else {
 					g++;
 				}
-				if (button.style.backgroundColor != "#c21b1b") {
+				if (button.style.state != "red") {
 					button.style.backgroundColor = "#c3c3c3";
+				} else {
+					button.style.backgroundColor = "#c21b1b";
 				}
 				letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 				i++;

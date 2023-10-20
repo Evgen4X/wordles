@@ -1,12 +1,7 @@
-var kb_buttons,
-	brd_rows,
-	brd_letters,
-	letters_number;
-
 const checked_letters = {
-		letter_list: [],
-		status_list: []
-	};
+	letter_list: [],
+	status_list: [],
+};
 
 const game_over = document.querySelector(".go");
 
@@ -93,10 +88,10 @@ function typeLetter(text) {
 
 	if (text == "Enter") {
 		let word = "";
-		for (let i = 1; i < 6; i++) {
-			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
+		for (let i = 1; i < letters_number + 1; i++) {
+			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).textContent;
 		}
-		if (word.length != 5) {
+		if (word.length != letter_number) {
 			msg_alert("Enter full word!", 3000);
 			return;
 		}
@@ -106,7 +101,7 @@ function typeLetter(text) {
 			return;
 		}
 		console.log(checked_letters);
-		for(let i = 0; i < letters_number; i++){
+		for (let i = 0; i < letters_number; i++) {
 			let current_letter = word[i].toUpperCase();
 			console.log("DEBUGGING: ", current_letter, word);
 			if (checked_letters["letter_list"].includes(current_letter)) {
@@ -156,14 +151,14 @@ function typeLetter(text) {
 			return;
 		}
 		let index = parseInt(row.getAttribute("index"));
-		if (index == 6) {
+		if (index == letter_number + 1) {
 			setTimeout(() => {
 				show_game_over(true);
 			}, 2000);
 			return;
 		}
 		row.setAttribute("status", "filled");
-		let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
+		let next_row = document.querySelector(`.brd_row[index="${index + 1}"]`);
 		next_row.setAttribute("status", "active");
 		set_first();
 	} else if (text == "⌫") {
@@ -183,8 +178,8 @@ function typeLetter(text) {
 		letter.setAttribute("status", "filled");
 		if (letter.getAttribute("index") != letters_number) {
 			let index = parseInt(letter.getAttribute("index"));
-			let next = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index + 1}"]`);
-			next[0].setAttribute("status", "active");
+			let next = document.querySelector(`.brd_row[status="active"] .letter[index="${index + 1}"]`);
+			next.setAttribute("status", "active");
 		}
 	}
 }
@@ -215,6 +210,7 @@ const letters_slider = document.querySelectorAll(".amount_of_letters");
 letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
+		url.search = "";
 		url.searchParams.set("length", button.textContent);
 		window.location.href = url;
 	});

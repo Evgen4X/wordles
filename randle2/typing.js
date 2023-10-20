@@ -187,15 +187,7 @@ const ryellow = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturatio
 const rgray = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${lightness + Math.floor(Math.random() * 50)}%)`;
 
 var possible_events = ["normal", "reverse", "random", "5050", "lier", "greens", "alphabetical"];
-var events_descs = [
-	"Nothing special, just a normal Wordle",
-	"Blue means that there's a letter in your guess in that spot",
-	"Colors are randomized",
-	"Green and yellow are mixed",
-	"Sometimes there will be lie",
-	"You get only greens, no yellows, no grays",
-	"Orange means that the correct letter is earlier in the alphabet and purple that is later",
-];
+var events_descs = ["Nothing special, just a normal Wordle", "Blue means that there's a letter in your guess in that spot", "Colors are randomized", "Green and yellow are mixed", "Sometimes there will be lie", "You get only greens, no yellows, no grays", "Orange means that the correct letter is earlier in the alphabet and purple that is later"];
 var events = [];
 for (let i = 1; i < letters_number + 1; i++) {
 	let index;
@@ -234,6 +226,7 @@ const letters_slider = document.querySelectorAll(".amount_of_letters");
 letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
+		url.search = "";
 		url.searchParams.set("length", button.textContent);
 		window.location.href = url;
 	});

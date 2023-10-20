@@ -127,6 +127,7 @@ const letters_slider = document.querySelectorAll(".amount_of_letters");
 letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
+		url.search = "";
 		url.searchParams.set("length", button.textContent);
 		window.location.href = url;
 	});

@@ -8,6 +8,7 @@ function hide_letter(event) {
 }
 
 function generate(cols, rows) {
+	console.log(cols);
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
@@ -52,6 +53,7 @@ function encode(text) {
 }
 
 function decode(text) {
+	text = decodeURIComponent(text);
 	let ans = "",
 		s1,
 		s2;

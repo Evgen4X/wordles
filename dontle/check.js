@@ -76,8 +76,8 @@ function decode(text) {
 
 function get_link() {
 	let text = document.getElementById("link_input").value.toUpperCase();
-	if (text.length != 5) {
-		msg_alert("The word must be 5 symbols long!", 3000);
+	if (text.length < 3 || text.length > 15) {
+		msg_alert("The word must be from 3 to 15 letters long!", 3000);
 		return;
 	}
 	for (let i of text) {
@@ -88,6 +88,7 @@ function get_link() {
 	}
 	let url = new URL(window.location.href);
 	url.searchParams.set("word", encode(text));
+	url.searchParams.set("length", text.length);
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
 	link.textContent = "Link is here";

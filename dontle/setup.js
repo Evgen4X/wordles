@@ -41,6 +41,8 @@ function generate(cols, rows) {
 	check_dict = answers.includes(answer);
 }
 
+var kb_buttons, brd_rows, brd_letters, letters_number;
+
 const params = new URL(window.location.href).searchParams;
 var answer, check_dict;
 
