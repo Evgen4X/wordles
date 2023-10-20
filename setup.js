@@ -90,3 +90,5 @@ function close_all() {
 function show_how_to() {
 	document.querySelector(".how_to").style.display = "flex";
 }
+
+show_how_to();
