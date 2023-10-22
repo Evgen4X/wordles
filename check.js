@@ -87,3 +87,5 @@ function hide_all() {
 	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
 	close_all();
 }
+
+show_how_to();
