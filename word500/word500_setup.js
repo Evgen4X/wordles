@@ -16,7 +16,7 @@ function generate(cols, rows) {
 	brd_letters = document.querySelectorAll(".letter");
 	brd_letters[0].setAttribute("status", "active");
 	brd_letters.forEach((letter) => {
-		letter.addEventListener("click", toggle);
+		letter.addEventListener("click", () => {toggle(letter)});
 	});
 
 	answers = answers.filter((answer) => answer.length == cols);
@@ -32,6 +32,8 @@ function generate(cols, rows) {
 	document.querySelector(".title").textContent = `WORD ${cols}00`;
 }
 
+var kb_buttons, brd_rows, brd_letters, letters_number;
+
 const params = new URL(window.location.href).searchParams;
 var answer, check_dict;
 
@@ -43,12 +45,14 @@ if (params.get("length") == null) {
 	generate(parseInt(params.get("length")), 8);
 }
 
-function toggle(event) {
-	const sender = event.target;
+function toggle(sender, state=null) {
+	// const sender = event.target;
 	if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(sender.textContent) == -1) {
 		return;
 	}
-	let state = sender.getAttribute("state");
+	if(state == null){
+		state = sender.getAttribute("state");
+	}
 	if (state == "gray") {
 		sender.setAttribute("state", "red");
 		sender.style.backgroundColor = "#c21b1b";
@@ -100,4 +104,29 @@ function msg_alert(msg, time) {
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
 	}, time);
+}
+
+function clear_all(){
+	brd_letters.forEach(letter => {
+		toggle(letter, "green");
+	});
+	close_all();
+}
+
+function show_settings() {
+	document.querySelector(".settings").style.display = "flex";
+}
+
+function show_custom() {
+	document.querySelector(".custom").style.display = "flex";
+}
+
+function close_all() {
+	document.querySelectorAll(".absolute").forEach((el) => {
+		el.style.display = "none";
+	});
+}
+
+function show_how_to() {
+	document.querySelector(".how_to").style.display = "flex";
 }

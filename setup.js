@@ -8,7 +8,6 @@ function hide_letter(event) {
 }
 
 function generate(cols, rows) {
-	console.log(cols);
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
@@ -53,7 +52,6 @@ function encode(text) {
 }
 
 function decode(text) {
-	text = decodeURIComponent(text);
 	let ans = "",
 		s1,
 		s2;
@@ -65,12 +63,11 @@ function decode(text) {
 	return ans;
 }
 
-function msg_alert(msg, time) {
-	let msgbox = document.querySelector("#alert"),
-		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.innerHTML = msg;
-	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
-	setTimeout(() => {
-		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
-	}, time);
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
+	});
+	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
 }
