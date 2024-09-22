@@ -1,3 +1,5 @@
+var kb_buttons, brd_rows, brd_letters, letters_number;
+
 function hide_letter(event) {
 	const target = event.target;
 	if (target.style.opacity == "0") {
@@ -7,7 +9,7 @@ function hide_letter(event) {
 	}
 }
 
-function generate(cols, rows) {
+function generate(cols, rows, alphabet) {
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
@@ -19,6 +21,40 @@ function generate(cols, rows) {
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
 
+	if (alphabet == null || alphabet.length == 0) {
+		alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+		answers = answers.filter((answer) => answer.length == cols);
+		if (params.get("word") == null) {
+			answer = answers[Math.floor(Math.random() * answers.length)];
+		} else {
+			answer = decode(params.get("word"));
+			msg_alert("That wordle <b><i>may</i></b> not use standart dictionary!", 7500);
+		}
+		check_dict = answers.includes(answer);
+	} else {
+		answers = null;
+		check_dict = false;
+	}
+
+	var kbd = document.getElementById("keyboard");
+	var row = document.createElement("div");
+	row.classList.add("kb_row");
+	for (let i of alphabet) {
+		let letter = document.createElement("button");
+		letter.classList.add("kb_key");
+		letter.innerHTML = i;
+		if (i == "ENTER") {
+			letter.setAttribute("style", "aspect-ratio: 2 / 1");
+		}
+		row.appendChild(letter);
+		if ("PL⌫".includes(i)) {
+			kbd.appendChild(row);
+			row = document.createElement("div");
+			row.classList.add("kb_row");
+			console.log(kbd);
+		}
+	}
+
 	kb_buttons = document.querySelectorAll(".kb_key");
 	brd_rows = document.querySelectorAll(".brd_row");
 	brd_rows[0].setAttribute("status", "active");
@@ -28,16 +64,6 @@ function generate(cols, rows) {
 	brd_letters.forEach((letter) => {
 		letter.addEventListener("click", hide_letter);
 	});
-
-	answers = answers.filter((answer) => answer.length == cols);
-
-	if (params.get("word") == null) {
-		answer = answers[Math.floor(Math.random() * answers.length)];
-	} else {
-		answer = decode(params.get("word"));
-		msg_alert("That wordle may not use standart dictionary!", 7500);
-	}
-	check_dict = answers.includes(answer);
 }
 
 function encode(text) {
@@ -71,15 +97,6 @@ function hide_all() {
 	});
 
 	answers = answers.filter((answer) => answer.length == cols);
-
-	if (params.get("word") == null) {
-		answer = answers[Math.floor(Math.random() * answers.length)];
-	} else {
-		answer = decode(params.get("word"));
-		msg_alert("That wordle may not use standart dictionary!", 7500);
-	}
-
-	check_dict = answers.includes(answer);
 }
 
 function encode(text) {

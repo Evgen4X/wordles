@@ -19,6 +19,25 @@ function generate(cols, rows) {
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
 
+	var kbd = document.getElementById("keyboard");
+	var row = document.createElement("div");
+	row.classList.add("kb_row");
+	for (let i of alphabet) {
+		let letter = document.createElement("button");
+		letter.classList.add("kb_key");
+		letter.innerHTML = i;
+		if (i == "ENTER") {
+			letter.setAttribute("style", "aspect-ratio: 2 / 1");
+		}
+		row.appendChild(letter);
+		if ("PL⌫".includes(i)) {
+			kbd.appendChild(row);
+			row = document.createElement("div");
+			row.classList.add("kb_row");
+			console.log(kbd);
+		}
+	}
+
 	kb_buttons = document.querySelectorAll(".kb_key");
 	brd_rows = document.querySelectorAll(".brd_row");
 	document.querySelector('.board .brd_row[index="1"]').setAttribute("status", "active");
@@ -39,21 +58,10 @@ function generate(cols, rows) {
 	check_dict = answers.includes(answer);
 }
 
-const params = new URL(window.location.href).searchParams;
-var answer, check_dict;
-
-if (params.get("length") == null) {
-	generate(5, 8);
-} else if (params.get("word") != null) {
-	generate(params.get("word").length / 2, 8);
-} else {
-	generate(parseInt(params.get("length")), 8);
-}
-
 function show_event_tooltip(event) {
 	const target = event.target;
-	document.querySelector(".event_tooltip .title").textContent = target.getAttribute("event");
-	document.querySelector(".event_tooltip #description").textContent = target.getAttribute("event_desc");
+	document.querySelector(".event_tooltip .title").innerHTML = target.getAttribute("event");
+	document.querySelector(".event_tooltip #description").innerHTML = target.getAttribute("event_desc");
 }
 
 function encode(text) {
@@ -88,4 +96,17 @@ function msg_alert(msg, time) {
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
 	}, time);
+}
+
+let alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+
+const params = new URL(window.location.href).searchParams;
+var answer, check_dict;
+
+if (params.get("length") == null) {
+	generate(5, 8);
+} else if (params.get("word") != null) {
+	generate(params.get("word").length / 2, 8);
+} else {
+	generate(parseInt(params.get("length")), 8);
 }

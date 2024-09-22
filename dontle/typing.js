@@ -84,7 +84,6 @@ function keyType(event) {
 function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
-	document.getElementById("error").textContent = "";
 
 	if (text == "Enter") {
 		let word = "";
@@ -96,7 +95,6 @@ function typeLetter(text) {
 			return;
 		}
 		if (!is_word(word) && check_dict) {
-			document.getElementById("error").textContent = "Enter a valid word!";
 			msg_alert("Evter a valid word!", 3000);
 			return;
 		}

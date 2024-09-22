@@ -10,13 +10,34 @@ function generate(cols, rows) {
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
 
+	var kbd = document.getElementById("keyboard");
+	var row = document.createElement("div");
+	row.classList.add("kb_row");
+	for (let i of alphabet) {
+		let letter = document.createElement("button");
+		letter.classList.add("kb_key");
+		letter.innerHTML = i;
+		if (i == "ENTER") {
+			letter.setAttribute("style", "aspect-ratio: 2 / 1");
+		}
+		row.appendChild(letter);
+		if ("PL⌫".includes(i)) {
+			kbd.appendChild(row);
+			row = document.createElement("div");
+			row.classList.add("kb_row");
+			console.log(kbd);
+		}
+	}
+
 	kb_buttons = document.querySelectorAll(".kb_key");
 	brd_rows = document.querySelectorAll(".brd_row");
 	brd_rows[0].setAttribute("status", "active");
 	brd_letters = document.querySelectorAll(".letter");
 	brd_letters[0].setAttribute("status", "active");
 	brd_letters.forEach((letter) => {
-		letter.addEventListener("click", () => {toggle(letter)});
+		letter.addEventListener("click", () => {
+			toggle(letter);
+		});
 	});
 
 	answers = answers.filter((answer) => answer.length == cols);
@@ -29,28 +50,15 @@ function generate(cols, rows) {
 	}
 	check_dict = answers.includes(answer);
 
-	document.querySelector(".title").textContent = `WORD ${cols}00`;
+	document.querySelector(".title").innerHTML = `WORD ${cols}00`;
 }
 
-var kb_buttons, brd_rows, brd_letters, letters_number;
-
-const params = new URL(window.location.href).searchParams;
-var answer, check_dict;
-
-if (params.get("length") == null) {
-	generate(5, 8);
-} else if (params.get("word") != null) {
-	generate(params.get("word").length / 2, 8);
-} else {
-	generate(parseInt(params.get("length")), 8);
-}
-
-function toggle(sender, state=null) {
+function toggle(sender, state = null) {
 	// const sender = event.target;
-	if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(sender.textContent) == -1) {
+	if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(sender.innerHTML) == -1) {
 		return;
 	}
-	if(state == null){
+	if (state == null) {
 		state = sender.getAttribute("state");
 	}
 	if (state == "gray") {
@@ -106,8 +114,8 @@ function msg_alert(msg, time) {
 	}, time);
 }
 
-function clear_all(){
-	brd_letters.forEach(letter => {
+function clear_all() {
+	brd_letters.forEach((letter) => {
 		toggle(letter, "green");
 	});
 	close_all();
@@ -129,6 +137,21 @@ function close_all() {
 
 function show_how_to() {
 	document.querySelector(".how_to").style.display = "flex";
+}
+
+let alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+
+var kb_buttons, brd_rows, brd_letters, letters_number;
+
+const params = new URL(window.location.href).searchParams;
+var answer, check_dict;
+
+if (params.get("length") == null) {
+	generate(5, 8);
+} else if (params.get("word") != null) {
+	generate(params.get("word").length / 2, 8);
+} else {
+	generate(parseInt(params.get("length")), 8);
 }
 
 show_how_to();

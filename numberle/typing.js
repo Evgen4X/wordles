@@ -22,7 +22,6 @@ function keyType(event) {
 function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
-	document.getElementById("error").textContent = "";
 
 	if (text == "Enter") {
 		let number = "";

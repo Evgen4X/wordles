@@ -10,7 +10,7 @@ function check_word(word, answer) {
 	for (let i = 0; i < word.length; i++) {
 		if (word[i] === answer[i]) {
 			result[i] = 2;
-			remainingLetters[i] = null; // Mark the letter as used
+			remainingLetters[i] = null;
 		}
 	}
 
@@ -20,7 +20,7 @@ function check_word(word, answer) {
 			const letterIndex = remainingLetters.indexOf(word[i]);
 			if (letterIndex !== -1) {
 				result[i] = 1;
-				remainingLetters[letterIndex] = null; // Mark the letter as used
+				remainingLetters[letterIndex] = null;
 			} else {
 				result[i] = 0;
 			}
@@ -70,7 +70,7 @@ function get_link() {
 	url.searchParams.set("length", text.length);
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
-	link.textContent = "Link is here";
+	link.innerHTML = "Link is here";
 	return;
 }
 
@@ -105,7 +105,7 @@ function set_first() {
 function msg_alert(msg, time) {
 	let msgbox = document.querySelector("#alert"),
 		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.textContent = msg;
+	spanbox.innerHTML = msg;
 	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});

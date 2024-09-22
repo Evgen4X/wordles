@@ -2,7 +2,7 @@ const game_over = document.querySelector(".go");
 
 function buttonType(event) {
 	const sender = event.target;
-	const text = sender.textContent;
+	const text = sender.innerHTML;
 	typeLetter(text);
 }
 
@@ -15,26 +15,24 @@ function keyType(event) {
 		typeLetter(key.toUpperCase());
 		return;
 	} else if (key == "Enter") {
-		typeLetter("Enter");
+		typeLetter("ENTER");
 	}
 }
 
 function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
-	document.getElementById("error").textContent = "";
-
-	if (text == "Enter") {
+	console.log(text);
+	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
-			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).textContent;
+			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).innerHTML;
 		}
 		if (word.length != letters_number) {
 			msg_alert("Enter full word!", 3000);
 			return;
 		}
 		if (!is_word(word) && check_dict) {
-			document.getElementById("error").textContent = "Enter a valid word!";
 			msg_alert("Evter a valid word!", 3000);
 			return;
 		}
@@ -47,11 +45,11 @@ function typeLetter(text) {
 			let index = document.querySelector('.brd_row[status="active"]').getAttribute("index");
 			for (let i = 1; i <= index; i++) {
 				for (let j = 1; j < letters_number + 1; j++) {
-					let letter = document.querySelector(`.brd_row[index="${i}"] .letter[index="${j}"]`);
-					if (word.includes(letter.textContent)) {
+					let letter = document.querySelector(`.brd_row[index="${index}"] .letter[index="${j}"]`);
+					if (word.includes(letter.innerHTML)) {
 						letter.style.backgroundColor = "#c21b1b";
 						if (i == index) {
-							let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+							let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
 							letter.style.animation = `rotate 0.8s linear ${(j - 1) * 200 + "ms"} 1 normal forwards`;
 							button.style.backgroundColor = "#c21b1b";
 						}
@@ -62,7 +60,7 @@ function typeLetter(text) {
 			g = letters_number;
 			for (let i = 1; i < letters_number + 1; i++) {
 				let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-				let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+				let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
 				letter.style.backgroundColor = "#79b851";
 				button.style.backgroundColor = "#79b851";
 				letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
@@ -71,7 +69,7 @@ function typeLetter(text) {
 			let i = 1;
 			for (let status of check) {
 				let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-				let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+				let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
 				if (status == 0) {
 					r++;
 				} else if (status == 1) {
@@ -90,20 +88,20 @@ function typeLetter(text) {
 		}
 		let green = document.querySelector('.brd_row[status="active"] .green');
 		setTimeout(() => {
-			green.textContent = g;
+			green.innerHTML = g;
 		}, 1700);
 
 		green.style.animation = "rotate 0.8s linear 1200ms 1 normal forwards";
 
 		let yellow = document.querySelector('.brd_row[status="active"] .yellow');
 		setTimeout(() => {
-			yellow.textContent = y;
+			yellow.innerHTML = y;
 		}, 1900);
 		yellow.style.animation = "rotate 0.8s linear 1400ms 1 normal forwards";
 
 		let red = document.querySelector('.brd_row[status="active"] .red');
 		setTimeout(() => {
-			red.textContent = r;
+			red.innerHTML = r;
 		}, 2100);
 		red.style.animation = "rotate 0.8s linear 1600ms 1 normal forwards";
 		if (check.every((status) => status == 2)) {
@@ -126,17 +124,17 @@ function typeLetter(text) {
 	} else if (text == "⌫") {
 		if (letter == null) {
 			let target = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${letters_number}"]`);
-			target[0].textContent = "";
+			target[0].innerHTML = "";
 			target[0].setAttribute("status", "active");
 			return;
 		}
 		let index = parseInt(letter.getAttribute("index"));
 		let target = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index - 1}"]`)[0];
-		target.textContent = "";
+		target.innerHTML = "";
 		target.setAttribute("status", "active");
 		letter.setAttribute("status", "none");
 	} else {
-		letter.textContent = text;
+		letter.innerHTML = text;
 		letter.setAttribute("status", "filled");
 		if (letter.getAttribute("index") != letters_number) {
 			let index = parseInt(letter.getAttribute("index"));
@@ -150,17 +148,17 @@ function show_game_over(win) {
 	let title = document.querySelector(".absolute .title"),
 		ans = document.querySelector(".absolute .go_answer");
 	if (win) {
-		title.textContent = "You won!";
+		title.innerHTML = "You won!";
 	} else {
-		title.textContent = "You lost!";
+		title.innerHTML = "You lost!";
 	}
-	ans.textContent = `The correct answer was: ${answer.toLowerCase()}`;
+	ans.innerHTML = `The correct answer was: ${answer.toLowerCase()}`;
 	game_over.style.display = "flex";
 }
 
 kb_buttons.forEach((button) => {
 	button.addEventListener("click", buttonType);
-	button.setAttribute("letter", button.textContent.toString());
+	button.setAttribute("letter", button.innerHTML.toString());
 });
 document.addEventListener("keyup", keyType);
 
@@ -169,7 +167,7 @@ const letters_slider = document.querySelectorAll(".amount_of_letters");
 letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
-		url.searchParams.set("length", button.textContent);
+		url.searchParams.set("length", button.innerHTML);
 		window.location.href = url;
 	});
 });

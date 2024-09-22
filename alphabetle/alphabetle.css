@@ -151,15 +151,6 @@ nav {
 	}
 }
 
-#error {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: red;
-	text-align: center;
-	font-size: large;
-}
-
 .absolute {
 	padding: 1em;
 	background-color: #101010;

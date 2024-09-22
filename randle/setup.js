@@ -24,6 +24,25 @@ function generate(cols, rows) {
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
 
+	var kbd = document.getElementById("keyboard");
+	var row = document.createElement("div");
+	row.classList.add("kb_row");
+	for (let i of alphabet) {
+		let letter = document.createElement("button");
+		letter.classList.add("kb_key");
+		letter.innerHTML = i;
+		if (i == "ENTER") {
+			letter.setAttribute("style", "aspect-ratio: 2 / 1");
+		}
+		row.appendChild(letter);
+		if ("PL⌫".includes(i)) {
+			kbd.appendChild(row);
+			row = document.createElement("div");
+			row.classList.add("kb_row");
+			console.log(kbd);
+		}
+	}
+
 	kb_buttons = document.querySelectorAll(".kb_key");
 	brd_rows = document.querySelectorAll(".brd_row");
 	brd_rows[0].setAttribute("status", "active");
@@ -42,17 +61,6 @@ function generate(cols, rows) {
 		msg_alert("That wordle may not use standart dictionary!", 7500);
 	}
 	check_dict = answers.includes(answer);
-}
-
-const params = new URL(window.location.href).searchParams;
-var answer, check_dict;
-
-if (params.get("length") == null) {
-	generate(5, 6);
-} else if (params.get("word") != null) {
-	generate(params.get("word").length / 2, 6);
-} else {
-	generate(parseInt(params.get("length")), 6);
 }
 
 function encode(text) {
@@ -129,6 +137,19 @@ function get_link() {
 	url.searchParams.set("word", encode(text));
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
-	link.textContent = "Link is here";
+	link.innerHTML = "Link is here";
 	return;
+}
+
+let alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+
+const params = new URL(window.location.href).searchParams;
+var answer, check_dict;
+
+if (params.get("length") == null) {
+	generate(5, 6);
+} else if (params.get("word") != null) {
+	generate(params.get("word").length / 2, 6);
+} else {
+	generate(parseInt(params.get("length")), 6);
 }

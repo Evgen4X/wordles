@@ -4,7 +4,7 @@ const game_over = document.querySelector(".go");
 
 function buttonType(event) {
 	const sender = event.target;
-	const text = sender.textContent;
+	const text = sender.innerHTML;
 	typeLetter(text);
 }
 
@@ -24,12 +24,11 @@ function keyType(event) {
 function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
-	document.getElementById("error").textContent = "";
 
 	if (text == "Enter") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
-			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
+			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].innerHTML;
 		}
 		if (word.length != letters_number) {
 			return;
@@ -43,7 +42,7 @@ function typeLetter(text) {
 		let check_alphabetical = check_word_alphabetical(word, answer);
 		for (let i = 0; i < letters_number; i++) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i + 1}"]`);
-			let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+			let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
 			let event = letter.getAttribute("event");
 			if (event == "lier" && Math.random() < 0.5) {
 				let rnd_color = ["#545454", "#f3c237", "#79b851"][Math.floor(Math.random() * 3)];
@@ -143,20 +142,20 @@ function typeLetter(text) {
 	} else if (text == "⌫") {
 		if (letter == null) {
 			let target = document.querySelector(`.brd_row[status="active"] .letter[index="${letters_number}"]`);
-			target.textContent = "";
+			target.innerHTML = "";
 			target.setAttribute("status", "active");
 			return;
 		}
 		let index = parseInt(letter.getAttribute("index"));
 		let target = document.querySelector(`.brd_row[status="active"] .letter[index="${index - 1}"]`);
-		target.textContent = "";
+		target.innerHTML = "";
 		target.setAttribute("status", "active");
 		letter.setAttribute("status", "none");
 	} else {
 		if (event == "deny" && denied.includes(text)) {
 			return;
 		}
-		letter.textContent = text;
+		letter.innerHTML = text;
 		letter.setAttribute("status", "filled");
 		if (letter.getAttribute("index") != letters_number) {
 			let index = parseInt(letter.getAttribute("index"));
@@ -170,11 +169,11 @@ function show_game_over(win) {
 	let title = document.querySelector(".absolute .title"),
 		ans = document.querySelector(".absolute .go_answer");
 	if (win) {
-		title.textContent = "You won!";
+		title.innerHTML = "You won!";
 	} else {
-		title.textContent = "You lost!";
+		title.innerHTML = "You lost!";
 	}
-	ans.textContent = `The correct answer was: ${answer.toLowerCase()}`;
+	ans.innerHTML = `The correct answer was: ${answer.toLowerCase()}`;
 	game_over.style.display = "flex";
 }
 
@@ -212,8 +211,8 @@ for (let i = 1; i < letters_number + 1; i++) {
 
 kb_buttons.forEach((button) => {
 	button.addEventListener("click", buttonType);
-	button.setAttribute("letter", button.textContent.toString());
-	if (events[0] == "deny" && denied.includes(button.textContent)) {
+	button.setAttribute("letter", button.innerHTML.toString());
+	if (events[0] == "deny" && denied.includes(button.innerHTML)) {
 		button.setAttribute("prev_bg", button.style.backgroundColor);
 		button.style.backgroundColor = "#820000";
 	}
@@ -227,7 +226,7 @@ letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
 		url.search = "";
-		url.searchParams.set("length", button.textContent);
+		url.searchParams.set("length", button.innerHTML);
 		window.location.href = url;
 	});
 });

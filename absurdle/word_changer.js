@@ -4,7 +4,7 @@ To find the "best" word for changing, use that criteria:
 |
 --- anount of greens (the least, the better)
 
-If there're many words with the same amount of yellows/greens, choose the first one
+If there're many words with the same amount of yellows/greens, choose a random one
 */
 
 function count_yellows(word, target) {
@@ -79,6 +79,10 @@ function find_word(answer, checks) {
 			best_word_yellows = yellows;
 			best_word_greens = greens;
 			continue;
+		}
+		if (greens == best_word_greens && Math.random() < 0.4) {
+			best_word = word;
+			best_word_yellows = yellows;
 		}
 		//if both yellows and green equal, then do nothing
 	}

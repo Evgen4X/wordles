@@ -17,43 +17,7 @@
 			<button onclick="show_settings();" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
 		</header>
 		<div class="board mainboard"></div>
-		<span id="error"></span>
-		<div id="keyboard">
-			<div class="kb_row">
-				<button class="kb_key">Q</button>
-				<button class="kb_key">W</button>
-				<button class="kb_key">E</button>
-				<button class="kb_key">R</button>
-				<button class="kb_key">T</button>
-				<button class="kb_key">Y</button>
-				<button class="kb_key">U</button>
-				<button class="kb_key">I</button>
-				<button class="kb_key">O</button>
-				<button class="kb_key">P</button>
-			</div>
-			<div class="kb_row">
-				<button class="kb_key">A</button>
-				<button class="kb_key">S</button>
-				<button class="kb_key">D</button>
-				<button class="kb_key">F</button>
-				<button class="kb_key">G</button>
-				<button class="kb_key">H</button>
-				<button class="kb_key">J</button>
-				<button class="kb_key">K</button>
-				<button class="kb_key">L</button>
-			</div>
-			<div class="kb_row">
-				<button class="kb_key" style="aspect-ratio: 2 / 1">Enter</button>
-				<button class="kb_key">Z</button>
-				<button class="kb_key">X</button>
-				<button class="kb_key">C</button>
-				<button class="kb_key">V</button>
-				<button class="kb_key">B</button>
-				<button class="kb_key">N</button>
-				<button class="kb_key">M</button>
-				<button class="kb_key">⌫</button>
-			</div>
-		</div>
+		<div id="keyboard"></div>
 
 		<div class="absolute go">
 			<!--Game over -->
@@ -141,9 +105,9 @@
 					<div class="letter red">1</div>
 				</div>
 			</div>
-			<p><span style="color: #79b851">Green</span> color means that the letter is in the word and in the correct place</p>
-			<p>Try to get which color should each letter be and guess the answer as fast as possible!</p>
-			<p>You can click on the letters to change them color to help you visualise your deduction</p>
+			<p><span style="color: #79b851">Green</span> color shows how many letters are in correct spots</p>
+			<p>Try to get which colors the letters have and guess the answer as fast as possible!</p>
+			<p>You can click on the letters to change their color to help you visualise your thoughts</p>
 			<div class="button_container">
 				<button onclick="close_all();">Close</button>
 			</div>

@@ -43,7 +43,7 @@ function new_game() {
 function get_link() {
 	let text = document.getElementById("link_input").value.toUpperCase();
 	if (text.length < 3 || text.length > 15) {
-		msg_alert("The word must be from 3 to 15 letters long!", 3000);
+		msg_alert(`The word must be from 3 to 15 letters long!<br>You word's length: ${text.length}`, 3000);
 		return;
 	}
 	for (let i of text) {
@@ -57,7 +57,7 @@ function get_link() {
 	url.searchParams.set("length", text.length);
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
-	link.textContent = "Link is here";
+	link.innerHTML = "Link is here";
 	return;
 }
 
@@ -84,7 +84,7 @@ function hide_all() {
 	brd_letters.forEach((letter) => {
 		letter.style.opacity = target;
 	});
-	document.getElementById("hide_all").textContent = ["Show all letters", "Hide all letters"][parseInt(target)];
+	document.getElementById("hide_all").innerHTML = ["Show all letters", "Hide all letters"][parseInt(target)];
 	close_all();
 }
 

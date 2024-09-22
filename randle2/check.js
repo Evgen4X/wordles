@@ -84,7 +84,7 @@ function set_first() {
 function msg_alert(msg, time) {
 	let msgbox = document.querySelector("#alert"),
 		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.textContent = msg;
+	spanbox.innerHTML = msg;
 	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
@@ -114,7 +114,7 @@ function get_link() {
 	url.searchParams.set("length", text.length);
 	let link = document.getElementById("link");
 	link.setAttribute("href", url);
-	link.textContent = "Link is here";
+	link.innerHTML = "Link is here";
 	return;
 }
 

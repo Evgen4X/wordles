@@ -4,7 +4,7 @@ const game_over = document.querySelector(".go");
 
 function buttonType(event) {
 	const sender = event.target;
-	const text = sender.textContent;
+	const text = sender.innerHTML;
 	typeLetter(text);
 }
 
@@ -25,21 +25,24 @@ function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
 	const event = row.getAttribute("event");
-	document.getElementById("error").textContent = "";
 
 	if (event == "deny") {
 		kb_reset = true;
 		kb_buttons.forEach((button) => {
-			if (denied.includes(button.textContent)) {
-				button.style.backgroundColor = "#820000";
+			if (denied.includes(button.innerHTML)) {
+				button.style.opacity = 0.15;
 			}
+		});
+	} else {
+		kb_buttons.forEach((button) => {
+			button.style.opacity = 1;
 		});
 	}
 
 	if (text == "Enter") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
-			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
+			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].innerHTML;
 		}
 		if (word.length != letters_number) {
 			msg_alert("Enter full word!", 3000);
@@ -48,16 +51,19 @@ function typeLetter(text) {
 		if (event == "backwards") {
 			word = word.split("").reverse().join("");
 		}
-		if ((!is_word(word) && check_dict && event != "unreal") || (event == "unreal" && is_word(word))) {
-			document.getElementById("error").textContent = "Enter a valid word!";
+		if (!is_word(word) && check_dict && event != "unreal") {
 			msg_alert("Evter a valid word!", 3000);
+			return;
+		}
+		if (event == "unreal" && is_word(word)) {
+			msg_alert("Enter an <b>IN</b>valid word!", 3000);
 			return;
 		}
 		for (let i = 1; i < letters_number + 1; i++) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
 			if (letter.getAttribute("event") == "vowel") {
-				if (!"AEUIO".includes(letter.textContent)) {
-					msg_alert("Every bordered spot must include a vowel!", 3000);
+				if (!"AEUIO".includes(letter.innerHTML)) {
+					msg_alert("Every bordered spot must be a vowel!", 3000);
 					return;
 				}
 			}
@@ -82,7 +88,7 @@ function typeLetter(text) {
 				let temp_word = word.split("").sort((a, b) => 0.5 - Math.random());
 				check = check_word(temp_word, answer);
 				for (let i = 1; i < letters_number + 1; i++) {
-					document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).textContent = temp_word[i - 1];
+					document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).innerHTML = temp_word[i - 1];
 				}
 			} catch (ex) {
 				alert(ex);
@@ -90,7 +96,8 @@ function typeLetter(text) {
 		}
 		for (let status of check) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-			let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
+			let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
+			debugger;
 			if (status == 0) {
 				if (event != "greens" && letter.getAttribute("event") != "blind") {
 					letter.style.setProperty("--color", "#545454");
@@ -106,6 +113,7 @@ function typeLetter(text) {
 					}
 				} else {
 					letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+					button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 					i++;
 					continue;
 				}
@@ -133,6 +141,7 @@ function typeLetter(text) {
 					}
 				} else {
 					letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+					button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 					i++;
 					continue;
 				}
@@ -166,17 +175,15 @@ function typeLetter(text) {
 				button.style.setProperty("--color", "#2c2cdf");
 			} else if (status == 4) {
 				letter.style.setProperty("--color", "#ffaa00"); //orange, earlier
-				button.style.setProperty("--color", button.style.backgroundColor);
+				button.style.setProperty("--color", "#888888");
 				letter.style.borderRadius = "0 0 0.5em 0.5em";
 			} else if (status == 5) {
-				letter.style.setProperty("--color", "#b700ff");
-				button.style.setProperty("--color", button.style.backgroundColor);
+				letter.style.setProperty("--color", "#b700ff"); //purple, after
+				button.style.setProperty("--color", "#888888");
 				letter.style.borderRadius = "0.5em 0.5em 0 0";
 			}
 			letter.style.animation = `to_color 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-			if (button.style.backgroundColor != "#820000") {
-				button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-			}
+			button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 			i++;
 		}
 		if (check.every((status) => status == 2)) {
@@ -206,23 +213,25 @@ function typeLetter(text) {
 				}
 			});
 		}
+
+		typeLetter("0"); //needed to update letters on 'deny' event
 	} else if (text == "⌫") {
 		if (letter == null) {
 			let target = document.querySelector(`.brd_row[status="active"] .letter[index="${letters_number}"]`);
-			target.textContent = "";
+			target.innerHTML = "";
 			target.setAttribute("status", "active");
 			return;
 		}
 		let index = parseInt(letter.getAttribute("index"));
 		let target = document.querySelector(`.brd_row[status="active"] .letter[index="${index - 1}"]`);
-		target.textContent = "";
+		target.innerHTML = "";
 		target.setAttribute("status", "active");
 		letter.setAttribute("status", "none");
-	} else {
+	} else if (text != "0") {
 		if (event == "deny" && denied.includes(text)) {
 			return;
 		}
-		letter.textContent = text;
+		letter.innerHTML = text;
 		letter.setAttribute("status", "filled");
 		if (letter.getAttribute("index") != letters_number) {
 			let index = parseInt(letter.getAttribute("index"));
@@ -236,11 +245,11 @@ function show_game_over(win) {
 	let title = document.querySelector(".absolute .title"),
 		ans = document.querySelector(".absolute .go_answer");
 	if (win) {
-		title.textContent = "You won!";
+		title.innerHTML = "You won!";
 	} else {
-		title.textContent = "You lost!";
+		title.innerHTML = "You lost!";
 	}
-	ans.textContent = `The correct answer was: ${answer.toLowerCase()}`;
+	ans.innerHTML = `The correct answer was: ${answer.toLowerCase()}`;
 	game_over.style.display = "flex";
 }
 
@@ -263,27 +272,13 @@ do {
 var kb_reset = false;
 
 var possible_events = ["vowel", "blind", "unreal", "reverse", "random", "50/50", "lier", "backwards", "deny", "greens", "shuffle", "repeat", "alphabetical"];
-var events_descs = [
-	"The bordered spot must contain a vowel",
-	"You won't see what's in the gray spots",
-	"Enter anything, but not a word!",
-	"Blue means that there's a letter in your guess in that spot",
-	"Colors are randomized",
-	"Green and yellow are mixed",
-	"One spot is not true",
-	"The word must be reversed",
-	"You are not allowed to use 6 letters",
-	"You get only greens, no yellows, no grays",
-	"Order of letters will be randomized after your guess",
-	"You must use a letter twice",
-	"Orange means that the correct letter is earlier in the alphabet and purple that is later",
-];
+var events_descs = ["Every bordered spot must be a vowel", "You won't see the color of the grey spots", "Enter anything but a real word!", "Blue means that in that spot should be another letter of your guess", "Colors are randomized", "Greens and yellows are mixed", "One spot lies to you", "The word must be reversed", "You are not allowed to use 6 random letters", "You get only greens, no yellows, no grays", "Order of letters will be randomized after your guess", "You must use any letter twice", "Orange means that the correct letter is earlier in the alphabet and purple means that the letter is later"];
 var events = [];
 for (let i = 1; i < 6; i++) {
 	let index = Math.floor(Math.random() * possible_events.length);
 	let chosen = possible_events[index];
 	possible_events.splice(index, 1);
-	document.querySelector(`.brd_row[index="${i}"] span`).textContent = chosen[0].toUpperCase() + chosen.slice(1) + ": " + events_descs[index];
+	document.querySelector(`.brd_row[index="${i}"] span`).innerHTML = chosen[0].toUpperCase() + chosen.slice(1) + ": " + events_descs[index];
 	if (chosen == "50/50") {
 		chosen = "5050";
 	}
@@ -323,11 +318,11 @@ for (let i = 1; i < 6; i++) {
 
 kb_buttons.forEach((button) => {
 	button.addEventListener("click", buttonType);
-	button.setAttribute("letter", button.textContent.toString());
-	if (events[0] == "deny" && denied.includes(button.textContent)) {
+	button.setAttribute("letter", button.innerHTML.toString());
+	if (events[0] == "deny" && denied.includes(button.innerHTML)) {
 		kb_reset = true;
 		button.setAttribute("prev_bg", button.style.backgroundColor);
-		button.style.backgroundColor = "#820000";
+		button.style.opacity = 0.15;
 	}
 });
 
@@ -338,7 +333,7 @@ const letters_slider = document.querySelectorAll(".amount_of_letters");
 letters_slider.forEach((button) => {
 	button.addEventListener("click", () => {
 		let url = new URL(window.location.href);
-		url.searchParams.set("length", button.textContent);
+		url.searchParams.set("length", button.innerHTML);
 		window.location.href = url;
 	});
 });
